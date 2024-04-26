@@ -1,6 +1,6 @@
 package com.es.proyectoformulario.ui.panels;
 
-
+import com.es.proyectoformulario.model.User;
 import com.es.proyectoformulario.services.impl.ServiceUser;
 
 import javax.swing.*;
@@ -10,12 +10,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-/**
- * @author Pablo Macías
- */
 public class PanelLogin extends JPanel {
     JTextField user;
-    JTextField pass;
+    JPasswordField pass;
     JButton bEnviar;
 
     ServiceUser serviceUser = new ServiceUser();
@@ -23,11 +20,22 @@ public class PanelLogin extends JPanel {
     MouseListener listenerMouse = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
+            String username = user.getText();
+            String password = new String(pass.getPassword());
 
-            if(serviceUser.checkUser(user.getText(), pass.getText())) {
-                System.out.println("Esta registrado");
+            if (username.isEmpty() && password.isEmpty()) {
+                JOptionPane.showMessageDialog(PanelLogin.this, "Por favor, introduzca el nombre de usuario y la contraseña", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+            } else if (username.isEmpty()) {
+                JOptionPane.showMessageDialog(PanelLogin.this, "Por favor, introduzca el nombre de usuario", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+            } else if (password.isEmpty()) {
+                JOptionPane.showMessageDialog(PanelLogin.this, "Por favor, introduzca la contraseña", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
             } else {
-                System.out.println("Pa tu casa");
+                User user = serviceUser.checkUser(username, password);
+                if (user != null) {
+                    JOptionPane.showMessageDialog(PanelLogin.this, "Bienvenido " + user.getName() + "!", "Acceso Concedido", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(PanelLogin.this, "Credenciales incorrectas. Intente nuevamente.", "Acceso Denegado", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
 
@@ -45,6 +53,7 @@ public class PanelLogin extends JPanel {
             b.setBorder(new LineBorder(new Color(135, 206, 250), 3)); // Borde azul claro
         }
     };
+
     public PanelLogin() {
         this.setBackground(new Color(174, 139, 225));
         this.setLayout(null);
@@ -52,10 +61,9 @@ public class PanelLogin extends JPanel {
         JLabel usuario = new JLabel("Usuario: ");
         usuario.setLocation(new Point(200,135));
         usuario.setSize(new Dimension(152,32));
-        // usuario.setFont(new Font("Consolas", Font.BOLD, 22));
         this.add(usuario);
 
-        user = new JTextField("Introduzca su usuario");
+        user = new JTextField();
         user.setLocation(new Point(260,135));
         user.setSize(new Dimension(152,32));
         this.add(user);
@@ -76,5 +84,18 @@ public class PanelLogin extends JPanel {
         this.add(bEnviar);
         bEnviar.addMouseListener(listenerMouse);
 
+        JButton bRegistrarse = new JButton("Registrarse");
+        bRegistrarse.setLocation(new Point(220, 360));
+        bRegistrarse.setSize(new Dimension(152, 32));
+        this.add(bRegistrarse);
+
+        bRegistrarse.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Abrir la ventana de registro al hacer clic
+                PanelAlta alta = new PanelAlta();
+                alta.setVisible(true);
+            }
+        });
     }
 }
