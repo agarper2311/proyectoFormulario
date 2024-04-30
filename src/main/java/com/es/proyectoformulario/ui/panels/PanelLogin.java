@@ -55,7 +55,7 @@ public class PanelLogin extends JPanel {
     };
 
     public PanelLogin() {
-        this.setBackground(new Color(174, 139, 225));
+        this.setBackground(new Color(102, 153, 204));
         this.setLayout(null);
 
         JLabel usuario = new JLabel("Usuario: ");

@@ -1,7 +1,6 @@
 package com.es.proyectoformulario.ui.panels;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import com.es.proyectoformulario.services.impl.ServiceUser;
 import com.es.proyectoformulario.model.User;
@@ -15,9 +14,9 @@ public class PanelAlta extends JFrame {
 
     public PanelAlta() {
         setTitle("Registro de Usuario");
-        setSize(612, 450);  // Ajustado para coincidir con el tamaño del PanelLogin
+        setSize(612, 450);  // Tamaño para coincidir con el tamaño del PanelLogin
         setLayout(null);
-        getContentPane().setBackground(new Color(174, 139, 225));  // Mismo color de fondo que PanelLogin
+        getContentPane().setBackground(new Color(102, 153, 204));  // Mismo color de fondo que PanelLogin
 
         JLabel lblIdUser = new JLabel("ID de Usuario:");
         lblIdUser.setBounds(50, 35, 152, 32);
