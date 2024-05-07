@@ -21,17 +21,17 @@ public class ServiceUser {
         this.logger = new ServiceLogger();
     }
 
-    // Modificado para devolver User en lugar de boolean
-    public User checkUser(String idUser, String password) {
+
+    public boolean checkUser(String idUser, String password) {
         for (int i = 0; i < this.users.size(); i++) {
-            User usuario = this.users.get(i);
+            User usuario = this.users.get(i); // usuario es el elemento de la posicion i de users
             if (usuario.getId().equalsIgnoreCase(idUser) && usuario.getPass().equals(password)) {
                 this.logger.registrarLog(idUser, "LOGIN", "OK");
-                return usuario;  // Devuelve el usuario si las credenciales son correctas
+                return true;
             }
         }
         this.logger.registrarLog(idUser, "LOGIN", "NOT OK");
-        return null;  // Devuelve null si las credenciales son incorrectas
+        return false;
     }
 
     public boolean userExists(String idUser) {
